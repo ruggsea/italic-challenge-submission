@@ -57,7 +57,7 @@ The soft-label pool is on Hugging Face (italic-softkd-pool), so a replay can als
 
 ## Acknowledgments
 
-Done by [ruggsea](https://huggingface.co/ruggsea), using compute resources of the Complex Social & Computational Systems (CS²) group, IDea_Lab, University of Graz.
+Training, data curation and evaluation by [ruggsea](https://huggingface.co/ruggsea), using compute resources of the Complex Social & Computational Systems (CS²) group, IDea_Lab, University of Graz.
 
 ## License
 
