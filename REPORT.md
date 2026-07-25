@@ -64,13 +64,18 @@ from a strong teacher committee**, staged, plus a **grammar-floor fix**:
 - **Mix-ratio grammar blending (frac 0.45)** → lifts grammar but forgets knowledge (net -0.6pp).
   The additive fix is what corrected this.
 
-## Result decomposition (0.4652)
+## Result decomposition (shipped model, 0.4787)
 
-- pred distribution A3072/B2901/C2654/D1368/E5 — balanced, no single-letter collapse.
-- per-gold {A .494, B .478, C .489, D .364} — all ≫ the emission floor → genuine content.
-- per-category: civic .563, lexicon .519, tourism .508, current .500, geography .466, art .454,
-  history .446, syntax .415, literature .415, synonyms .491, orthography .387, morphology .357.
-  Knowledge strong; grammar lifted off the floor but still the remaining headroom.
+- per-gold accuracy {A .507, B .471, C .488, D .432} with balanced predictions
+  A3068/B2597/C2624/D1709 (no single-letter collapse) — genuine content, every letter far above
+  its emission rate.
+- per-category: civic education .565, lexicon .551, current events .511, tourism .506,
+  geography .497, synonyms .494, history .482, syntax .439, art history .437, orthography .425,
+  literature .412, morphology .314. Knowledge categories are near the distillation-transfer
+  ceiling; morphology remains the largest residual headroom.
+- (The earlier experimental checkpoint at 0.4652, referenced elsewhere in this report for the
+  research narrative, had a similar profile with weaker grammar: syntax .415, orthography .387,
+  morphology .357. The shipped clean-run model beats it on 9 of 12 categories.)
 
 ## Recipe chain and the final clean run
 
