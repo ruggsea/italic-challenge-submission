@@ -1,0 +1,16 @@
+{
+  "backend": "tokenizers",
+  "bos_token": "<|begin_of_text|>",
+  "clean_up_tokenization_spaces": true,
+  "eos_token": "<|im_end|>",
+  "is_local": true,
+  "local_files_only": false,
+  "model_input_names": [
+    "input_ids",
+    "attention_mask"
+  ],
+  "model_max_length": 131072,
+  "pad_token": "<|end_of_text|>",
+  "tokenizer_class": "TokenizersBackend",
+  "chat_template": "{{ bos_token }}\n{% if tools %}\n<|im_start|>system\n{% if messages and messages[0]['role'] == 'system' %}\n{{ messages[0]['content'] }}\n{% endif %}\n# Tools\nYou may call one or more functions to assist with the user query.\nYou are provided with function signatures within <tools></tools> XML tags:\n<tools>\n{% for tool in tools %}\n{{ tool | tojson }}\n{% endfor %}\n</tools>\nFor each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\n<tool_call>\n{\"name\": <function-name>, \"arguments\": <args-json-object>}\n</tool_call><|im_end|>\n{% else %}\n{% if messages and messages[0]['role'] == 'system' %}\n<|im_start|>system\n{{ messages[0]['content'] }}<|im_end|>\n{% endif %}\n{% endif %}\n\n{% for message in messages %}\n{% if message.content is string %}\n  {% set content = message.content %}\n{% else %}\n  {% set content = '' %}\n{% endif %}\n\n{% if (message.role == 'user') or (message.role == 'system' and not loop.first) %}\n<|im_start|>{{ message.role }}\n{{ content }}<|im_end|>\n\n{% elif message.role == 'assistant' %}\n<|im_start|>assistant\n{{ content }}\n{% if message.tool_calls %}\n  {% for tool_call in message.tool_calls %}\n    {% if tool_call.function %}\n      {% set tool_call = tool_call.function %}\n    {% endif %}\n<tool_call>\n{\"name\": \"{{ tool_call.name }}\", \"arguments\": {% if tool_call.arguments is string %}{{ tool_call.arguments }}{% else %}{{ tool_call.arguments | tojson }}{% endif %}}\n</tool_call>\n  {% endfor %}\n{% endif %}\n<|im_end|>\n\n{% elif message.role == 'tool' %}\n{% if loop.first or (messages[loop.index0 - 1].role != 'tool') %}\n<|im_start|>user\n{% endif %}\n<tool_response>\n{{ content }}\n</tool_response>\n{% if loop.last or (messages[loop.index0 + 1].role != 'tool') %}\n<|im_end|>\n{% endif %}\n\n{% endif %}\n{% endfor %}\n\n{% if add_generation_prompt %}\n<|im_start|>assistant\n{% endif %}\n"
+}

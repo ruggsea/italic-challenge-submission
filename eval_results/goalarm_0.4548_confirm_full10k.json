@@ -1,0 +1,90 @@
+{
+  "tag": "grammar-fullrich-lr15e4-confirm",
+  "model": "/cl_tmp/lazzaron/italic-star/experiments/grammar-fullrich-lr15e4/model",
+  "data_file": "/cl_tmp/lazzaron/italic-star/eval/italic.jsonl",
+  "n_examples": 10000,
+  "accuracy": 0.4548,
+  "accuracy_std": 0.4979527688445963,
+  "prediction_distribution": {
+    "A": 2910,
+    "B": 2969,
+    "C": 2653,
+    "D": 1463,
+    "E": 5
+  },
+  "per_gold_letter": {
+    "A": {
+      "acc": 0.4663,
+      "n": 2908
+    },
+    "B": {
+      "acc": 0.4802,
+      "n": 2705
+    },
+    "C": {
+      "acc": 0.4781,
+      "n": 2644
+    },
+    "D": {
+      "acc": 0.3628,
+      "n": 1728
+    },
+    "E": {
+      "acc": 0.1333,
+      "n": 15
+    }
+  },
+  "per_category": {
+    "art_history": {
+      "acc": 0.4622,
+      "n": 980
+    },
+    "civic_education": {
+      "acc": 0.5653,
+      "n": 973
+    },
+    "current_events": {
+      "acc": 0.4891,
+      "n": 92
+    },
+    "geography": {
+      "acc": 0.4648,
+      "n": 979
+    },
+    "history": {
+      "acc": 0.4468,
+      "n": 978
+    },
+    "lexicon": {
+      "acc": 0.5066,
+      "n": 979
+    },
+    "literature": {
+      "acc": 0.3953,
+      "n": 984
+    },
+    "morphology": {
+      "acc": 0.3143,
+      "n": 140
+    },
+    "orthography": {
+      "acc": 0.3749,
+      "n": 971
+    },
+    "synonyms_and_antonyms": {
+      "acc": 0.4521,
+      "n": 971
+    },
+    "syntax": {
+      "acc": 0.4029,
+      "n": 973
+    },
+    "tourism": {
+      "acc": 0.4939,
+      "n": 980
+    }
+  },
+  "results_json": "/cl_tmp/lazzaron/italic-star/experiments/grammar-fullrich-lr15e4-confirm/results/custom_openai_italic_model_italic_fast_few_shot.json",
+  "eval_wallclock_seconds": 663,
+  "timestamp": "2026-07-25T10:02:38"
+}

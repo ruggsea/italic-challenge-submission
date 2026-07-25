@@ -1,0 +1,411 @@
+{
+  "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "sim_threshold": 0.8,
+  "sources": {
+    "mmlu_ita": {
+      "before": 13127,
+      "removed_exact_italic": 0,
+      "removed_internal_dup": 112,
+      "removed_semantic_italic": 28,
+      "after": 12987,
+      "category_coverage": {
+        "other": 12987
+      }
+    },
+    "mmlu_pro_ita": {
+      "before": 12167,
+      "removed_exact_italic": 0,
+      "removed_internal_dup": 19,
+      "removed_semantic_italic": 15,
+      "after": 12133,
+      "category_coverage": {
+        "other": 12133
+      }
+    },
+    "pinocchio": {
+      "before": 102573,
+      "removed_exact_italic": 1517,
+      "removed_internal_dup": 12517,
+      "removed_semantic_italic": 3937,
+      "after": 84602,
+      "category_coverage": {
+        "other": 61011,
+        "civic_education": 15124,
+        "history": 2484,
+        "geography": 1366,
+        "tourism": 1250,
+        "morphology": 704,
+        "literature": 695,
+        "current_events": 686,
+        "art_history": 459,
+        "syntax": 301,
+        "orthography": 296,
+        "synonyms_and_antonyms": 140,
+        "lexicon": 86
+      }
+    }
+  },
+  "totals": {
+    "before": 127867,
+    "after": 109722
+  },
+  "softkd_balanced_pool": {
+    "out": "/data/nfs/ruggsea/italic-challenge/data/pools/Bsoftkl_balanced.jsonl",
+    "src": "/data/nfs/ruggsea/italic-challenge/data/sft/Bsoftkl.jsonl",
+    "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "sim_threshold": 0.8,
+    "before": 9842,
+    "by_gold_before": {
+      "A": 2738,
+      "B": 2739,
+      "C": 2625,
+      "D": 1713,
+      "E": 27
+    },
+    "removed_not_abcd": 27,
+    "removed_exact_question_italic": 3,
+    "removed_exact_italic": 0,
+    "removed_internal_dup": 0,
+    "removed_semantic_italic": 0,
+    "after_decontam": 9812,
+    "by_gold_after_decontam": {
+      "A": 2737,
+      "B": 2738,
+      "C": 2624,
+      "D": 1713
+    },
+    "balance_per_letter": 1713,
+    "after_balance": 6852,
+    "by_gold_final": {
+      "A": 1713,
+      "B": 1713,
+      "C": 1713,
+      "D": 1713
+    },
+    "reverify_exact_question": 0,
+    "reverify_exact": 0,
+    "reverify_semantic": 0,
+    "max_sim_final": 0.7998837828636169,
+    "seed": 42
+  },
+  "committee_pools": {
+    "committee_correct": {
+      "out": "data/pools/committee_correct.jsonl",
+      "pool": "tracks/committee/data/pool_mcq.jsonl",
+      "labels": [
+        "tracks/committee/labels/pool/mistral-24b.jsonl",
+        "tracks/committee/labels/pool/gemma-27b.jsonl",
+        "tracks/committee/labels/pool/qwen3-32b.jsonl"
+      ],
+      "source": "pinocchio",
+      "exclude_category": [
+        "other"
+      ],
+      "include_imperfect": false,
+      "civic_cap": 3000,
+      "n_teachers": 3,
+      "emb_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "sim_threshold": 0.8,
+      "pre_decontam": 18214,
+      "removed_exact_italic": 0,
+      "removed_semantic_italic": 0,
+      "max_sim_final": 0.7999382019042969,
+      "after": 9906,
+      "imperfect_kept": 0,
+      "gold_dist": {
+        "A": 2851,
+        "B": 2711,
+        "C": 2585,
+        "D": 1729,
+        "E": 30
+      },
+      "category_coverage": {
+        "civic_education": 3000,
+        "history": 1971,
+        "geography": 1192,
+        "tourism": 1006,
+        "literature": 612,
+        "current_events": 593,
+        "morphology": 551,
+        "art_history": 315,
+        "orthography": 232,
+        "syntax": 225,
+        "synonyms_and_antonyms": 125,
+        "lexicon": 84
+      }
+    },
+    "committee_rich": {
+      "out": "data/pools/committee_rich.jsonl",
+      "pool": "tracks/committee/data/pool_mcq.jsonl",
+      "labels": [
+        "tracks/committee/labels/pool/mistral-24b.jsonl",
+        "tracks/committee/labels/pool/gemma-27b.jsonl",
+        "tracks/committee/labels/pool/qwen3-32b.jsonl"
+      ],
+      "source": "pinocchio",
+      "exclude_category": [
+        "other"
+      ],
+      "include_imperfect": true,
+      "civic_cap": 3000,
+      "n_teachers": 3,
+      "emb_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "sim_threshold": 0.8,
+      "pre_decontam": 23459,
+      "removed_exact_italic": 0,
+      "removed_semantic_italic": 0,
+      "max_sim_final": 0.7999382019042969,
+      "after": 11453,
+      "imperfect_kept": 2318,
+      "gold_dist": {
+        "A": 3166,
+        "B": 3075,
+        "C": 3087,
+        "D": 2086,
+        "E": 39
+      },
+      "category_coverage": {
+        "civic_education": 3000,
+        "history": 2480,
+        "geography": 1363,
+        "tourism": 1245,
+        "morphology": 703,
+        "literature": 695,
+        "current_events": 685,
+        "art_history": 459,
+        "syntax": 301,
+        "orthography": 296,
+        "synonyms_and_antonyms": 140,
+        "lexicon": 86
+      }
+    },
+    "committee_grammar": {
+      "out": "data/pools/committee_grammar.jsonl",
+      "pool": "data/pools/grammar/grammar_candidates_v2.jsonl",
+      "labels": [
+        "tracks/committee/labels/grammar/mistral-24b.jsonl",
+        "tracks/committee/labels/grammar/gemma-27b.jsonl",
+        "tracks/committee/labels/grammar/qwen3-32b.jsonl"
+      ],
+      "source": "",
+      "exclude_category": [],
+      "include_imperfect": false,
+      "civic_cap": 0,
+      "n_teachers": 3,
+      "emb_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "sim_threshold": 0.8,
+      "pre_decontam": 11039,
+      "removed_exact_italic": 0,
+      "removed_semantic_italic": 4807,
+      "max_sim_final": 0.9785969257354736,
+      "after": 6232,
+      "imperfect_kept": 0,
+      "gold_dist": {
+        "A": 1680,
+        "B": 2248,
+        "C": 1592,
+        "D": 712
+      },
+      "category_coverage": {
+        "synonyms_and_antonyms": 2703,
+        "syntax": 2061,
+        "lexicon": 813,
+        "morphology": 563,
+        "orthography": 92
+      }
+    },
+    "committee_orthomorph": {
+      "out": "data/pools/committee_orthomorph.jsonl",
+      "pool": "data/pools/grammar/orthomorph_candidates.jsonl",
+      "labels": [
+        "tracks/committee/labels/orthomorph/mistral-24b.jsonl",
+        "tracks/committee/labels/orthomorph/gemma-27b.jsonl",
+        "tracks/committee/labels/orthomorph/qwen3-32b.jsonl"
+      ],
+      "source": "",
+      "exclude_category": [],
+      "include_imperfect": false,
+      "civic_cap": 0,
+      "n_teachers": 3,
+      "emb_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "sim_threshold": 0.8,
+      "pre_decontam": 4944,
+      "removed_exact_italic": 0,
+      "removed_semantic_italic": 1010,
+      "max_sim_final": 0.9642351865768433,
+      "after": 3934,
+      "imperfect_kept": 0,
+      "gold_dist": {
+        "A": 1777,
+        "B": 1283,
+        "C": 619,
+        "D": 255
+      },
+      "category_coverage": {
+        "orthography": 2377,
+        "morphology": 1557
+      }
+    }
+  },
+  "grammar_pools": {
+    "grammar_v1": {
+      "out": "/data/nfs/ruggsea/italic-challenge/data/pools/grammar_pool.jsonl",
+      "pools": [
+        "/tmp/grammar/grammar_candidates.jsonl"
+      ],
+      "labels": [
+        "/tmp/grammar/grammar_labels.jsonl"
+      ],
+      "emb_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "sim_threshold": 0.8,
+      "include_imperfect": false,
+      "pre_decontam": 6454,
+      "removed_wrong": 498,
+      "removed_dup": 48,
+      "removed_exact_italic": 0,
+      "removed_semantic_italic": 2465,
+      "max_sim_final": 0.9748342633247375,
+      "after": 3989,
+      "imperfect_kept": 0,
+      "gold_dist": {
+        "A": 1012,
+        "B": 1593,
+        "C": 933,
+        "D": 451
+      },
+      "source_dist": {
+        "gen_mistral": 2858,
+        "gen_wordnet": 1131
+      },
+      "category_coverage": {
+        "syntax": 2072,
+        "lexicon": 805,
+        "morphology": 557,
+        "synonyms_and_antonyms": 462,
+        "orthography": 93
+      }
+    }
+  },
+  "grammar_committee_mix": {
+    "grammar_committee_mix.jsonl": {
+      "out": "data/pools/grammar_committee_mix.jsonl",
+      "grammar": "data/pools/committee_grammar.jsonl",
+      "rich": "data/pools/committee_rich.jsonl",
+      "grammar_frac_target": 0.45,
+      "syn_lex_cap_frac": 0.5,
+      "grammar_available": 6232,
+      "grammar_core_floor": 2716,
+      "grammar_syn_lex_kept": 2716,
+      "grammar_used": 5432,
+      "rich_used": 6639,
+      "total": 12071,
+      "actual_grammar_frac": 0.45,
+      "category_coverage": {
+        "syntax": 2231,
+        "synonyms_and_antonyms": 2188,
+        "civic_education": 1709,
+        "history": 1415,
+        "morphology": 966,
+        "geography": 814,
+        "tourism": 734,
+        "lexicon": 663,
+        "literature": 423,
+        "current_events": 406,
+        "orthography": 265,
+        "art_history": 257
+      }
+    },
+    "grammar_committee_mix_f0.20.jsonl": {
+      "out": "data/pools/grammar_committee_mix_f0.20.jsonl",
+      "grammar": "data/pools/committee_grammar.jsonl",
+      "rich": "data/pools/committee_rich.jsonl",
+      "grammar_frac_target": 0.2,
+      "syn_lex_cap_frac": 0.5,
+      "grammar_available": 6232,
+      "grammar_core_floor": 2716,
+      "grammar_syn_lex_kept": 2716,
+      "grammar_used": 5432,
+      "rich_used": 11453,
+      "total": 16885,
+      "actual_grammar_frac": 0.322,
+      "category_coverage": {
+        "civic_education": 3000,
+        "history": 2480,
+        "syntax": 2362,
+        "synonyms_and_antonyms": 2239,
+        "geography": 1363,
+        "morphology": 1266,
+        "tourism": 1245,
+        "lexicon": 703,
+        "literature": 695,
+        "current_events": 685,
+        "art_history": 459,
+        "orthography": 388
+      }
+    },
+    "grammar_committee_mix_f0.30.jsonl": {
+      "out": "data/pools/grammar_committee_mix_f0.30.jsonl",
+      "grammar": "data/pools/committee_grammar.jsonl",
+      "rich": "data/pools/committee_rich.jsonl",
+      "grammar_frac_target": 0.3,
+      "syn_lex_cap_frac": 0.5,
+      "grammar_available": 6232,
+      "grammar_core_floor": 2716,
+      "grammar_syn_lex_kept": 2716,
+      "grammar_used": 5432,
+      "rich_used": 11453,
+      "total": 16885,
+      "actual_grammar_frac": 0.322,
+      "category_coverage": {
+        "civic_education": 3000,
+        "history": 2480,
+        "syntax": 2362,
+        "synonyms_and_antonyms": 2239,
+        "geography": 1363,
+        "morphology": 1266,
+        "tourism": 1245,
+        "lexicon": 703,
+        "literature": 695,
+        "current_events": 685,
+        "art_history": 459,
+        "orthography": 388
+      }
+    }
+  },
+  "grammar_committee_fullrich_v2": {
+    "grammar_committee_fullrich_v2.jsonl": {
+      "out": "data/pools/grammar_committee_fullrich_v2.jsonl",
+      "grammar": "data/pools/committee_grammar.jsonl",
+      "extra": "data/pools/committee_orthomorph.jsonl",
+      "rich": "data/pools/committee_rich.jsonl",
+      "syn_lex_cap_frac": 0.5,
+      "grammar_union_available": 10153,
+      "grammar_union_cats": {
+        "lexicon": 813,
+        "morphology": 2107,
+        "orthography": 2469,
+        "synonyms_and_antonyms": 2703,
+        "syntax": 2061
+      },
+      "grammar_core_floor": 6637,
+      "grammar_syn_lex_kept": 3516,
+      "grammar_added_after_rich_dedup": 10153,
+      "rich_kept": 11453,
+      "total": 21606,
+      "category_coverage": {
+        "civic_education": 3000,
+        "synonyms_and_antonyms": 2843,
+        "morphology": 2810,
+        "orthography": 2765,
+        "history": 2480,
+        "syntax": 2362,
+        "geography": 1363,
+        "tourism": 1245,
+        "lexicon": 899,
+        "literature": 695,
+        "current_events": 685,
+        "art_history": 459
+      }
+    }
+  }
+}
