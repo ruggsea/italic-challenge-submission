@@ -84,7 +84,7 @@ mistral-softkd → self-distill → committee-iter 0.4387 → additive ortho/mor
 exceeds the 10-H100h replay budget. Per the compression directive, the **final clean run**
 distills the *final* committee soft labels (`grammar_committee_fullrich_v2`, 21606 items)
 directly from the base model in ONE softKD run — `code/final_run.sh` + `code/final_train.slurm`.
-Measured replay cost ≈4.8 H100h (synthetic generation 0.25 + committee labeling 0.47 + one softKD
+Measured replay cost ≈4.9 H100h (synthetic generation 0.25 + labeling incl. the knowledge-candidate pre-label 0.62 + decontam 0.05 + one softKD
 run 3.70 + official eval 0.28; H200 wall clock × 1.2; full itemization in the README). The from-base clean-run model scored
 **0.4787 / 0.4784** on the full official 10K, beating every experimental checkpoint, and is the
 shipped artifact. A 2-stage variant (content-SFT seed → softKD) reproduced 0.4685 / 0.4683 as a

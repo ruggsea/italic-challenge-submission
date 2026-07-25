@@ -32,10 +32,12 @@ Two details matter more than they look. The chat template is worth about +4 poin
 | WordNet / traditional-NLP grammar candidates (CPU) | - | 0 |
 | 3-teacher committee labeling: grammar candidates (11,793) | 8 min | 0.16 |
 | 3-teacher committee labeling: ortho/morph candidates (6,000) | 7 min | 0.13 |
-| 3-teacher committee labeling: knowledge subset (11,453; measured-equivalent job) | ~9 min | 0.18 |
+| Mistral pre-label of the 23.6k knowledge candidate set (selection base; measured rate: 24.3k in 8m22) | ~9 min | 0.17 |
+| 3-teacher committee labeling: selected knowledge items (11,453; measured rate: 11.8k in 8m09) | ~8 min | 0.16 |
+| Decontamination embeddings | ~3 min | 0.05 |
 | softKD training run (`final_train.slurm`) | 3h05m | 3.70 |
 | Official full-10K eval (`gsc1_eval_only.slurm`) | 14 min | 0.28 |
-| Total | | **≈4.8** |
+| Total | | **≈4.9** |
 
 The soft-label pool is on Hugging Face (italic-softkd-pool), so a replay can also skip labeling and still stay within budget with room to spare. Evaluation uses the official `run_eval.py` from the ITALIC repo, unmodified, fast mode, 5-shot, temperature 0.
 
