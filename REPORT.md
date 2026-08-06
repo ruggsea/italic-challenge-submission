@@ -19,7 +19,7 @@ Official `run_eval.py` fast protocol, temp 0, max_tokens 350, 10,000/10,000 pars
 3. Stage 3 (extkd): softKD from M2 s2000 on 28,561 EXTERNAL items (FinancialSupport/italic_sft 20,665 + italic_sft_ext 3,268 + quiz_militare 3,641 + pinocchio sample; 0% test overlap verified exact-hash + cosine>=0.80; answer-position-balanced), same KD hyperparams, best ckpt s1500 (dev2k-official 0.501).
 
 ## Budget (replay)
-Full stack replay = ~9.5-9.85 H100h of the 10 H100h cap (teacher inference included). LEGAL. See BUDGET.md.
+Full stack replay = ~9.0 H100h recipe-only (~9.5 including all confirmation evals) of the 10 H100h cap (teacher inference included). LEGAL. See BUDGET.md.
 
 ## Decontamination
 All pools: exact-hash + cosine >=0.80 (+ TF-IDF/MinHash cross-check) vs eval/italic.jsonl. External datasets: 0% exact, 0% near-dup overlap (italic_sft/ext/quiz_militare), 0.74% near-dup in pinocchio sample (dropped).
