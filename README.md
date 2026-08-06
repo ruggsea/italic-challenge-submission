@@ -32,27 +32,24 @@ Two details matter more than they look. The chat template is worth about +4 poin
 
 ## Reproducing the final run
 
-**v2 (current submission): ~8.9-9.9 H100h total** (measured stage-3 training 1h42m on RTX-PRO-6000-Blackwell ≈1.7 H100h; upper bound keeps all six confirmation evals + padded estimates) — v1 pipeline below (≈4.9) + stage-2 training (~2.0-2.2) + stage-3 external labeling (~0.15) + stage-3 training (~2.5) + confirmation evals (~0.45).
+**v2 (current submission, extkd-s1500): three stages, ~9.0 H100h recipe-only, ~9.5 H100h including all confirmation evals — under the 10-hour budget.** Measured costs (H200 = 1.2 H100, RTX PRO 6000 Blackwell = 1.0 H100, both conservative):
 
-**v1 (previous submission): ≈4.7 H100 hours**
+| Stage | GPU | Wall clock | H100h |
+|---|---|---|---|
+| Stage-1 data generation (grammar + ortho/morph MCQs, Mistral-24B) | 1x H200 | 12 min | 0.25 |
+| Stage-1 3-teacher committee labeling (Mistral-24B + Gemma-3-27B + Qwen3-32B, 21.6K items) | 1x H200 | ~25 min | 0.45-0.8 |
+| Stage-1 decontamination embeddings | 1x H200 | 3 min | 0.05 |
+| Stage-1 softKD training (`final_train.slurm`, from base) | 1x H200 | 3h05m | 3.70 |
+| Stage-2 committee labeling (Qwen2.5-72B-AWQ + Mistral-24B, 22,950 items) | 1x Blackwell | ~15 min | 0.15 |
+| Stage-2 softKD training (M2, 2,000 steps) | 1x Blackwell | ~2h | 2.0-2.2 |
+| Stage-3 external labeling (Mistral-24B, 57,563 items) | 1x Blackwell | ~10 min | 0.15 |
+| Stage-3 softKD training (extkd, 1,500 steps) | 1x Blackwell | 1h42m (measured) | 1.7 |
+| Stage-3 official full-10K eval | 1x Blackwell | ~25 min | 0.4 |
+| **Recipe total** | | | **~9.0** |
+| All confirmation evals (double/triple confirms across candidates) | mixed | ~1.5h | 0.45 |
+| **Total incl. verification** | | | **~9.5** |
 
-`code/final_run.sh` is the pipeline: build base+template, one softKD training job, official eval. Measured costs on a single H200 (converted at H200 = 1.2 H100):
-
-| Stage | Wall clock (1x H200) | H100h |
-|---|---|---|
-| Grammar MCQ generation, Mistral-24B (`gen_grammar_mistral.py`, 4,000 items + first-pass labels) | 5 min | 0.10 |
-| Ortho/morph MCQ generation, Mistral-24B (`gen_ortho_morph.py`, 6,000 items) | 7 min | 0.15 |
-| WordNet / traditional-NLP grammar candidates (CPU) | - | 0 |
-| 3-teacher committee labeling: grammar candidates (11,793) | 8 min | 0.16 |
-| 3-teacher committee labeling: ortho/morph candidates (6,000) | 7 min | 0.13 |
-| Mistral pre-label of the 23.6k knowledge candidate set (selection base; measured rate: 24.3k in 8m22) | ~9 min | 0.17 |
-| 3-teacher committee labeling: selected knowledge items (11,453; measured rate: 11.8k in 8m09) | ~8 min | 0.16 |
-| Decontamination embeddings | ~3 min | 0.05 |
-| softKD training run (`final_train.slurm`) | 3h05m | 3.70 |
-| Official full-10K eval (`gsc1_eval_only.slurm`) | 14 min | 0.28 |
-| Total | | **≈4.9** |
-
-The soft-label pool is on Hugging Face (italic-softkd-pool), so a replay can also skip labeling and still stay within budget with room to spare. Evaluation uses the official `run_eval.py` from the ITALIC repo, unmodified, fast mode, 5-shot, temperature 0.
+The soft-label pools are on Hugging Face ([italic-softkd-pool](https://huggingface.co/datasets/idealab-cs2/italic-softkd-pool), [italic-m2-culture-pool](https://huggingface.co/datasets/idealab-cs2/italic-m2-culture-pool), [italic-extkd-pool](https://huggingface.co/datasets/idealab-cs2/italic-extkd-pool)), so a replay can skip all labeling and still stay within budget. Evaluation uses the official `run_eval.py` from the ITALIC repo, unmodified, fast mode, 5-shot, temperature 0. Replay scripts: `code/final_run.sh` (stage 1), `code/final_run_v2.sh` (stages 2-3).
 
 ## Repository layout
 
@@ -68,7 +65,7 @@ The soft-label pool is on Hugging Face (italic-softkd-pool), so a replay can als
 - Evaluation code unmodified (clean clone of Crisp-Unimib/ITALIC).
 - No training on ITALIC test items: exact and semantic decontamination of every pool, manifest included.
 - All teachers fit one H100 80GB in bf16; all synthetic data generated locally on GPU, no API calls.
-- Final run replays in ≈8.9-9.9 H100 hours (v2, three stages, measured timings), under the 10-hour budget.
+- Final run replays in ≈9.0 H100 hours (v2, three stages, measured timings; ≈9.5 including all confirmation evals), under the 10-hour budget.
 
 ## Acknowledgments
 
