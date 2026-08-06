@@ -21,9 +21,20 @@ The final recipe is one training run from the base model:
 3. **One softKD run** from base (chatml chat template embedded, LR 1.5e-4, up to 4000 steps, best checkpoint by a fixed 2K-question dev subset, early stopping).
 4. **Official evaluation** on the full 10K with a fresh vLLM server.
 
+### v2 (2026-08-05): stages 2-3 to 0.4932
+
+The shipped model adds two softKD stages on top of the stage-1 recipe above, same hyperparameters (T=2.0, ce weight 0.5, LR 2e-5, seed 99):
+
+2. **Stage 2 (M2, culture pool):** 22,950 culture-focused items soft-labeled by a public 2-teacher committee (Qwen2.5-72B-Instruct-AWQ + Mistral-Small-3.2-24B), best checkpoint step 2000. -> 0.4878/0.4880.
+3. **Stage 3 (extkd, external in-distribution pool):** 28,561 agreement-filtered items from public datasets in the ITALIC distribution ([italic_sft](https://huggingface.co/datasets/FinancialSupport/italic_sft), italic_sft_ext, quiz_militare, pinocchio sample), soft-labeled by Mistral-Small-3.2-24B, best checkpoint step 1500. Pool: [idealab-cs2/italic-extkd-pool](https://huggingface.co/datasets/idealab-cs2/italic-extkd-pool). -> 0.4921/0.4929/0.4932. Replay script: `code/final_run_v2.sh`.
+
 Two details matter more than they look. The chat template is worth about +4 points and is legal surface (it ships with the model, the evaluation code is untouched). And the student must not train in pure bf16 at small learning rates: AdamW updates land below the bf16 representable step and the weights never move. All our early distillation failures trace back to this.
 
-## Reproducing the final run (≈4.7 H100 hours)
+## Reproducing the final run
+
+**v2 (current submission): ~9.5-9.85 H100h total** — v1 pipeline below (≈4.9) + stage-2 training (~2.0-2.2) + stage-3 external labeling (~0.15) + stage-3 training (~2.5) + confirmation evals (~0.45).
+
+**v1 (previous submission): ≈4.7 H100 hours**
 
 `code/final_run.sh` is the pipeline: build base+template, one softKD training job, official eval. Measured costs on a single H200 (converted at H200 = 1.2 H100):
 
@@ -57,7 +68,7 @@ The soft-label pool is on Hugging Face (italic-softkd-pool), so a replay can als
 - Evaluation code unmodified (clean clone of Crisp-Unimib/ITALIC).
 - No training on ITALIC test items: exact and semantic decontamination of every pool, manifest included.
 - All teachers fit one H100 80GB in bf16; all synthetic data generated locally on GPU, no API calls.
-- Final run replays in ≈4.7 H100 hours, under the 10-hour budget.
+- Final run replays in ≈9.5-9.85 H100 hours (v2, three stages), under the 10-hour budget.
 
 ## Acknowledgments
 
