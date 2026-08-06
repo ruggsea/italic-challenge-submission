@@ -2,7 +2,9 @@
 
 Submission for the [mii-llm Italian Post-Training Challenge](https://huggingface.co/spaces/mii-llm/Post-Training-Challenge): post-train [mii-llm/zagreus-0.4B-ita](https://huggingface.co/mii-llm/zagreus-0.4B-ita) (437M parameters) to maximize accuracy on [ITALIC](https://github.com/Crisp-Unimib/ITALIC), a 10,000-question Italian culture and language benchmark, with a final-run budget of 10 H100 GPU hours.
 
-**Result: 0.4787 accuracy on the full 10K** (official unmodified harness, 5-shot fast mode, temperature 0). Confirmed on three independent evaluation runs: 0.4787, 0.4784, and a third verification run. The base model scores 0.2802; the public leaderboard best at submission time was 0.372.
+**Result (2026-08-05): 0.4932 accuracy on the full 10K** — [idealab-cs2/zagreus-0.4B-italic-extkd](https://huggingface.co/idealab-cs2/zagreus-0.4B-italic-extkd), three independent runs 0.4921 / 0.4929 / 0.4932 (3-stage softKD: committee pool -> culture pool -> external in-distribution pool [italic-extkd-pool](https://huggingface.co/datasets/idealab-cs2/italic-extkd-pool)).
+
+**Previous submission: 0.4787 accuracy on the full 10K** (official unmodified harness, 5-shot fast mode, temperature 0). Confirmed on three independent evaluation runs: 0.4787, 0.4784, and a third verification run. The base model scores 0.2802; the public leaderboard best at submission time was 0.372.
 
 **Model:** [idealab-cs2/zagreus-0.4B-italic-softkd](https://huggingface.co/idealab-cs2/zagreus-0.4B-italic-softkd)
 
