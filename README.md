@@ -32,7 +32,7 @@ Two details matter more than they look. The chat template is worth about +4 poin
 
 ## Reproducing the final run
 
-**v2 (current submission): ~9.5-9.85 H100h total** — v1 pipeline below (≈4.9) + stage-2 training (~2.0-2.2) + stage-3 external labeling (~0.15) + stage-3 training (~2.5) + confirmation evals (~0.45).
+**v2 (current submission): ~8.9-9.9 H100h total** (measured stage-3 training 1h42m on RTX-PRO-6000-Blackwell ≈1.7 H100h; upper bound keeps all six confirmation evals + padded estimates) — v1 pipeline below (≈4.9) + stage-2 training (~2.0-2.2) + stage-3 external labeling (~0.15) + stage-3 training (~2.5) + confirmation evals (~0.45).
 
 **v1 (previous submission): ≈4.7 H100 hours**
 
@@ -68,7 +68,7 @@ The soft-label pool is on Hugging Face (italic-softkd-pool), so a replay can als
 - Evaluation code unmodified (clean clone of Crisp-Unimib/ITALIC).
 - No training on ITALIC test items: exact and semantic decontamination of every pool, manifest included.
 - All teachers fit one H100 80GB in bf16; all synthetic data generated locally on GPU, no API calls.
-- Final run replays in ≈9.5-9.85 H100 hours (v2, three stages), under the 10-hour budget.
+- Final run replays in ≈8.9-9.9 H100 hours (v2, three stages, measured timings), under the 10-hour budget.
 
 ## Acknowledgments
 
