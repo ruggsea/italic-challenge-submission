@@ -2,7 +2,7 @@
 
 Submission for the [mii-llm Italian Post-Training Challenge](https://huggingface.co/spaces/mii-llm/Post-Training-Challenge): post-train [mii-llm/zagreus-0.4B-ita](https://huggingface.co/mii-llm/zagreus-0.4B-ita) (437M parameters) to maximize accuracy on [ITALIC](https://github.com/Crisp-Unimib/ITALIC), a 10,000-question Italian culture and language benchmark, with a final-run budget of 10 H100 GPU hours.
 
-**Result (2026-08-05): 0.4932 accuracy on the full 10K** — [idealab-cs2/zagreus-0.4B-italic-extkd](https://huggingface.co/idealab-cs2/zagreus-0.4B-italic-extkd), three independent runs 0.4921 / 0.4929 / 0.4932 (3-stage softKD: committee pool -> culture pool -> external in-distribution pool [italic-extkd-pool](https://huggingface.co/datasets/idealab-cs2/italic-extkd-pool)).
+**Result (2026-08-05): 0.4932 accuracy on the full 10K** — [idealab-cs2/zagreus-0.4B-italic-extkd](https://huggingface.co/idealab-cs2/zagreus-0.4B-italic-extkd), three independent runs 0.4921 / 0.4929 / 0.4932 (3-stage softKD: [italic-softkd-pool](https://huggingface.co/datasets/idealab-cs2/italic-softkd-pool) -> [italic-m2-culture-pool](https://huggingface.co/datasets/idealab-cs2/italic-m2-culture-pool) -> [italic-extkd-pool](https://huggingface.co/datasets/idealab-cs2/italic-extkd-pool)).
 
 **Previous submission: 0.4787 accuracy on the full 10K** (official unmodified harness, 5-shot fast mode, temperature 0). Confirmed on three independent evaluation runs: 0.4787, 0.4784, and a third verification run. The base model scores 0.2802; the public leaderboard best at submission time was 0.372.
 
@@ -25,7 +25,7 @@ The final recipe is one training run from the base model:
 
 The shipped model adds two softKD stages on top of the stage-1 recipe above, same hyperparameters (T=2.0, ce weight 0.5, LR 2e-5, seed 99):
 
-2. **Stage 2 (M2, culture pool):** 22,950 culture-focused items soft-labeled by a public 2-teacher committee (Qwen2.5-72B-Instruct-AWQ + Mistral-Small-3.2-24B), best checkpoint step 2000. -> 0.4878/0.4880.
+2. **Stage 2 (M2, culture pool):** 22,950 culture-focused items soft-labeled by a public 2-teacher committee (Qwen2.5-72B-Instruct-AWQ + Mistral-Small-3.2-24B), best checkpoint step 2000. Pool: [idealab-cs2/italic-m2-culture-pool](https://huggingface.co/datasets/idealab-cs2/italic-m2-culture-pool). -> 0.4878/0.4880.
 3. **Stage 3 (extkd, external in-distribution pool):** 28,561 agreement-filtered items from public datasets in the ITALIC distribution ([italic_sft](https://huggingface.co/datasets/FinancialSupport/italic_sft), italic_sft_ext, quiz_militare, pinocchio sample), soft-labeled by Mistral-Small-3.2-24B, best checkpoint step 1500. Pool: [idealab-cs2/italic-extkd-pool](https://huggingface.co/datasets/idealab-cs2/italic-extkd-pool). -> 0.4921/0.4929/0.4932. Replay script: `code/final_run_v2.sh`.
 
 Two details matter more than they look. The chat template is worth about +4 points and is legal surface (it ships with the model, the evaluation code is untouched). And the student must not train in pure bf16 at small learning rates: AdamW updates land below the bf16 representable step and the weights never move. All our early distillation failures trace back to this.
