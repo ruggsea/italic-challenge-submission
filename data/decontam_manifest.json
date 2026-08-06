@@ -407,5 +407,16 @@
         "art_history": 459
       }
     }
+  },
+  "external_pools_2026-08-05": {
+    "pools": [
+      "italic_sft (20,665)",
+      "italic_sft_ext (3,268)",
+      "quiz_militare (3,641)",
+      "pinocchio sample (30,000)"
+    ],
+    "method": "exact-hash + cosine>=0.80 vs eval/italic.jsonl (+ TF-IDF cross-check)",
+    "result": "0% exact, 0% near-dup (italic_sft/ext/quiz); 0.74% near-dup pinocchio sample (dropped)",
+    "answer_position_balance": "A/B/C/D ~25% each verified (position skew = collapse root cause)"
   }
 }

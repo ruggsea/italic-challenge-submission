@@ -1,0 +1,64 @@
+{
+  "tag": "eval-extkd-t98-s1500-full10k-c2",
+  "model": "/data/nfs/ruggsea/italic-challenge/experiments/eval-extkd-t98-s1500-full10k-c2",
+  "n_examples": 10000,
+  "accuracy": 0.4929,
+  "accuracy_std": 0.49994958745857565,
+  "per_category": {
+    "art_history": {
+      "acc": 0.4847,
+      "n": 980
+    },
+    "civic_education": {
+      "acc": 0.554,
+      "n": 973
+    },
+    "current_events": {
+      "acc": 0.5217,
+      "n": 92
+    },
+    "geography": {
+      "acc": 0.5036,
+      "n": 979
+    },
+    "history": {
+      "acc": 0.4683,
+      "n": 978
+    },
+    "lexicon": {
+      "acc": 0.5781,
+      "n": 979
+    },
+    "literature": {
+      "acc": 0.4146,
+      "n": 984
+    },
+    "morphology": {
+      "acc": 0.3857,
+      "n": 140
+    },
+    "orthography": {
+      "acc": 0.4243,
+      "n": 971
+    },
+    "synonyms_and_antonyms": {
+      "acc": 0.552,
+      "n": 971
+    },
+    "syntax": {
+      "acc": 0.4522,
+      "n": 973
+    },
+    "tourism": {
+      "acc": 0.5102,
+      "n": 980
+    }
+  },
+  "per_gold": {
+    "A": 0.4807,
+    "B": 0.4898,
+    "C": 0.5526,
+    "D": 0.43,
+    "E": 0.1333
+  }
+}
